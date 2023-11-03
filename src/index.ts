@@ -34,10 +34,15 @@ app.get('/ohlc/:symbol', (req: Request, res: Response) => {
 });
 
 cron.schedule('* * * * *', () => {
+  const now = new Date().getTime(); 
+  const to = Math.floor(now / 1000);
+  const from = to - 300;
   const channel = realtime.channels.get('aapl-stock-value');
-  finnhubClient.quote("AAPL").then((resp) => {
+  finnhubClient.stockCandles("AAPL", '1', from, to).then(resp => {
     channel.publish("update", resp.data);
-  });
+  }).catch(err => {
+    console.error('Error fetching stock candle data:', err);
+  })
 });
 
 app.listen(port, () => {
