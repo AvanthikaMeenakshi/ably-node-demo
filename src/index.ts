@@ -19,11 +19,11 @@ const finnhubClient = new DefaultApi({
 
 app.get('/ohlc/:symbol', (req: Request, res: Response) => {
   const { symbol } = req.params
-  const from = Math.floor((Date.now() - 7 * 24 * 60 * 60 * 1000) / 1000);  // 7 days ago in Unix timestamp
-  const to = Math.floor(Date.now() / 1000);  // Current time in Unix timestamp
-
-  finnhubClient.stockCandles(symbol, 'D', from, to).then(resp => {
-    res.send(resp.data);
+  const now = new Date()
+  const from = Math.floor(now.setMonth(now.getMonth() - 2) / 1000); // 2 months ago in Unix timestamp
+  const to = Math.floor(Date.now() / 1000); // Current time in Unix timestamp
+  finnhubClient.stockCandles(symbol, '15', from, to).then(resp => {
+    res.json(resp.data)
   }).catch(err => {
     console.error('Error fetching stock candle data:', err);
   })
