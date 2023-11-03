@@ -1,10 +1,14 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { DefaultApi } from 'finnhub-ts'
+import cron from 'node-cron';
+import Ably from 'ably'
 
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
+
+const realtime = new Ably.Realtime(process.env.ABLY_API_KEY || '');
 
 const finnhubClient = new DefaultApi({
   apiKey: process.env.FINNHUB_API_KEY,
@@ -27,6 +31,13 @@ app.get('/ohlc/:symbol', (req: Request, res: Response) => {
   }).catch(err => {
     console.error('Error fetching stock candle data:', err);
   })
+});
+
+cron.schedule('* * * * *', () => {
+  const channel = realtime.channels.get('aapl-stock-value');
+  finnhubClient.quote("AAPL").then((resp) => {
+    channel.publish("update", resp.data);
+  });
 });
 
 app.listen(port, () => {

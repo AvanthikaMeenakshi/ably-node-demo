@@ -15,11 +15,13 @@
     "ably": "^1.2.46",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "finnhub-ts": "^1.0.7"
+    "finnhub-ts": "^1.0.7",
+    "node-cron": "^3.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.20",
     "@types/node": "^20.8.10",
+    "@types/node-cron": "^3.0.10",
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
