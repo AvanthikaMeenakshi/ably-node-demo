@@ -11,13 +11,13 @@ To run this application, you will need [finnhub.io](https://finnhub.io/docs/api)
    npm install
    ```
 
-2. To run the application locally, you need to create a `.env` file with your Ably API key. Add the following line to the `.env` file:
+2. To run the application locally, you need to create a `.env` file with your Ably API key. Add the following lines to the `.env` file:
 
-   ```
+```
   PORT=3000
   FINNHUB_API_KEY=<YOUR_FINNHUB_API_KEY>
   ABLY_API_KEY=<YOUR_ABLY_API_KEY>
-   ```
+```
 
 3. Execute the following command to run the application locally. It will be accessible at [localhost:3000](http://localhost:3000/):
 
